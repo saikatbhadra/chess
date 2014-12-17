@@ -88,7 +88,6 @@ class Board
     grid[i][j] = chess_piece
     chess_piece.position = [i,j]
   end
-  
 end
 
 
