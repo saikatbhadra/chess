@@ -14,9 +14,12 @@ if __FILE__ == $PROGRAM_NAME
 
   p my_rook
   p my_board.grid
-  # p my_board.grid[0]
+  p my_board[0]
+  puts "0th: column"
+  p my_board[nil, 0]
+  puts
   # puts
-  # p my_board[0][0]
-  # p my_board.grid[0][0]
-  # puts
+  p my_board[0, 0]
+  p my_board.grid[0][0]
+  puts
 end

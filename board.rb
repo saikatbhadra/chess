@@ -7,8 +7,13 @@ class Board
     set_board
   end
 
-  def []=(row)
-    board.grid[row]
+  def [](row=nil, column=nil)
+    return grid[row][column] unless column.nil? || row.nil?
+    if column.nil?
+      grid[row]
+    elsif row.nil?
+      grid.transpose[column]
+    end
   end
 
   def set_board
