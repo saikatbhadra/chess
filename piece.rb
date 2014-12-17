@@ -11,15 +11,22 @@ class Piece
 
   def inspect
     {
-      :color => color,
-      :position => position,
+      # :color => color,
+      # :position => position,
       :class => self.class
     }.inspect
   end
 
-  # def same_side?(coord)
-  #   board[4][4].grid.coord[0]
-  # end
+  def move_into_check?(destination)
+    dup_board = board.dup
+    dup_board.move(position, destination)
+    dup_board.in_check?(color)
+  end
+
+  def valid_moves
+    self.possible_moves.reject { |move| move_into_check?(move) }
+  end
+
 end
 
 class Pawn < Piece

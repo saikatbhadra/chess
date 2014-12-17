@@ -7,6 +7,38 @@ class Board
     set_board unless blank_board
   end
 
+  def dup
+    new_board = Board.new(true)
+    grid.each_with_index do |row, i|
+      row.each_with_index do |piece, j|
+        old_piece = self[i, j]
+        unless old_piece.nil?
+          new_piece = old_piece.class.new(new_board, old_piece.color, old_piece.position)
+          new_board.add_piece([i, j], new_piece)
+        end
+      end
+    end
+    new_board
+  end
+
+  def inspect
+    inspect_str = ''
+    grid.each_with_index do |row,i|
+      inspect_str << " \t0\t1\t2\t3\t4\t5\t6\t7\t\n" if i == 0
+      row.each_with_index do |el,j|
+        inspect_str << "#{i}\t" if j == 0
+        unless el.nil?
+          inspect_str << "#{el.class.to_s[0]}\t"
+        else
+          inspect_str << "_\t"
+        end
+      end
+      inspect_str << "\n\n"
+    end
+
+    inspect_str
+  end
+
   def [](row, column)
     return grid[row][column] unless column.nil? || row.nil?
     if column.nil?
@@ -80,9 +112,12 @@ class Board
 
     x ,y = start
     chess_piece = grid[x][y]
-    raise "Invalid Move" unless chess_piece.possible_moves.includes?(destination)
+    raise "Invalid Move" unless chess_piece.possible_moves.include?(destination)
 
-    # remove existing piece if the space is occupied
+    # remove the piece from its current spot
+    remove_piece(start)
+
+    # remove opponent piece if it exists
     remove_piece(destination) if occupied?(destination)
 
     # add new piece
