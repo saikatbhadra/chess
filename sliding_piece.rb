@@ -22,14 +22,17 @@ class SlidingPiece < Piece
       current_position = moves.last.dup
       current_position[0] += offset[0]
       current_position[1] += offset[1]
-      if !board.on_board?(current_position) || board.occupied?(current_position) ## can move to occupied if enemy piece
+
+      if !board.on_board?(current_position) || board.occupied?(current_position)
         can_move_further = false
+      elsif board.occupied?(current_position) &&  color != board[current_position].color
+        moves << current_position
       else
         moves << current_position
       end
     end
 
-    moves.shift
+    moves.shift # remove the first position which is not a valid move
     moves
   end
 end

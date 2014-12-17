@@ -20,7 +20,9 @@ class SteppingPiece < Piece
     future_position = position.dup
     future_position[0] += offset[0]
     future_position[1] += offset[1]
-    if board.on_board?(future_position) && !board.occupied?(future_position) ## can move to occupied if enemy piece
+    if board.on_board?(future_position) && !board.occupied?(future_position)
+      moves << future_position
+    elsif board.occupied?(future_position) &&  color != board[future_position].color
       moves << future_position
     end
 

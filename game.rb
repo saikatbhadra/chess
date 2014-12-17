@@ -24,12 +24,18 @@ if __FILE__ == $PROGRAM_NAME
   #
   # p my_pawn.possible_moves
 
-  x = [1,2,3]
-  y = x
-  y[0]  = 3
+  my_board = Board.new(true)
+  my_king = King.new(my_board,:b,[4,4])
+  p my_board
+  my_board.add_piece([4,4],my_king)
+  p my_board
+  my_board.remove_piece([4,4])
+  p my_board
 
-  p x # [3,2,3]
-  x = [4,5,6]
-  p y
+
+  # p my_board.in_check?(:b)
+
+
+
 
 end
