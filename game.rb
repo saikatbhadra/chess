@@ -1,5 +1,3 @@
-# require_relative 'stepping_piece'
-# require_relative 'sliding_piece'
 require_relative 'board'
 
 if __FILE__ == $PROGRAM_NAME

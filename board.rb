@@ -1,11 +1,14 @@
-require_relative 'stepping_piece'
-require_relative 'sliding_piece'
+require_relative 'pieces'
 
 class Board
   attr_accessor :grid
   def initialize
     @grid = Array.new(8) { Array.new(8, nil) }
     set_board
+  end
+
+  def []=(row)
+    board.grid[row]
   end
 
   def set_board
@@ -74,6 +77,7 @@ class Board
     x, y = coord
     (self.grid[x][y].nil?) ? false : true#default value for empty
   end
+
 
   def move(start, destination)
     raise "This tile is empty" unless occupied?(start)

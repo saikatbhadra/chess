@@ -1,5 +1,3 @@
-require 'YAML'
-require_relative 'board'
 require 'set'
 
 class Piece
@@ -10,6 +8,18 @@ class Piece
     @color = color
     @position = position
   end
+
+  def inspect
+    {
+      :color => color,
+      :position => position,
+      :class => self.class
+    }.inspect
+  end
+
+  # def same_side?(coord)
+  #   board[4][4].grid.coord[0]
+  # end
 end
 
 class Pawn < Piece
