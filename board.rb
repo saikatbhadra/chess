@@ -91,12 +91,18 @@ class Board
 
   def in_check?(color)
     king_coord = get_coord(King, color)
+    puts "King Coord: #{king_coord}"
 
     # get all of the opponent's pieces
     opponent_color = (color == :w) ? :b : :w
     opponent_pieces = get_pieces(opponent_color)
+    puts "opponent_pieces: #{opponent_pieces}"
 
-    opponent_pieces.none? { |piece| piece.possible_moves.include?(king_coord) }
+    opponent_pieces.any? { |piece|
+      p piece
+      p piece.possible_moves
+      piece.possible_moves.include?(king_coord)
+      }
   end
 
   def get_pieces(color)

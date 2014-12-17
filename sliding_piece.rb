@@ -23,10 +23,14 @@ class SlidingPiece < Piece
       current_position[0] += offset[0]
       current_position[1] += offset[1]
 
-      if !board.on_board?(current_position) || board.occupied?(current_position)
+      if !board.on_board?(current_position)
         can_move_further = false
-      elsif board.occupied?(current_position) &&  color != board[current_position].color
-        moves << current_position
+      elsif board.occupied?(current_position)
+        if color != board[*current_position].color
+          moves << current_position
+        else
+          can_move_further = false
+        end
       else
         moves << current_position
       end
