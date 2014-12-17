@@ -2,7 +2,7 @@ require_relative 'piece'
 
 class SlidingPiece < Piece
   # bishop / rook / queen
-  def initialize(board, color, position)
+  def initialize(board, color)
     super
     @offsets = []
   end
@@ -42,7 +42,7 @@ class SlidingPiece < Piece
 end
 
 class Bishop < SlidingPiece
-  def initialize(board, color, position)
+  def initialize(board, color)
     super
     @offsets = [-1, 1].repeated_permutation(2).to_a
   end
@@ -50,7 +50,7 @@ class Bishop < SlidingPiece
 end
 
 class Rook < SlidingPiece
-  def initialize(board, color, position)
+  def initialize(board, color)
     super
     @offsets = [
       [-1, 0],
@@ -63,7 +63,7 @@ class Rook < SlidingPiece
 end
 
 class Queen < SlidingPiece
-  def initialize(board, color, position)
+  def initialize(board, color)
     super
     @offsets = [-1, 0, 1].repeated_permutation(2).to_a
     @offsets.delete([0, 0])

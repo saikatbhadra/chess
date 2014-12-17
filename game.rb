@@ -25,11 +25,11 @@ if __FILE__ == $PROGRAM_NAME
   # p my_pawn.possible_moves
 
   my_board = Board.new(true)
-  my_king = King.new(my_board,:b,[4,4])
+  my_king = King.new(my_board,:b)
   my_board.add_piece([4,4],my_king)
-  white_knight = Knight.new(my_board, :w, [4,5])
+  white_knight = Knight.new(my_board, :w)
   my_board.add_piece([4,5], white_knight)
-  white_rook = Rook.new(my_board, :w, [4,7])
+  white_rook = Rook.new(my_board, :w)
   my_board.add_piece([4,7], white_rook)
 
   second_board = my_board.dup
@@ -38,7 +38,7 @@ if __FILE__ == $PROGRAM_NAME
   puts "2nd board: "
   p second_board
 
-  my_board.add_piece([1,1], Queen.new(my_board,:b,[1,1]))
+  my_board.add_piece([1,1], Queen.new(my_board,:b))
   puts "My board: "
   p my_board
   puts "2nd board: "

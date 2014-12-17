@@ -13,7 +13,7 @@ class Board
       row.each_with_index do |piece, j|
         old_piece = self[i, j]
         unless old_piece.nil?
-          new_piece = old_piece.class.new(new_board, old_piece.color, old_piece.position)
+          new_piece = old_piece.class.new(new_board, old_piece.color)
           new_board.add_piece([i, j], new_piece)
         end
       end
@@ -68,24 +68,24 @@ class Board
   end
 
   def set_board
-    self.add_piece([0,0],Rook.new)
-    grid[0][0] = Rook.new(grid, :b, [0, 0] ) ## use add_piece
-    grid[0][7] = Rook.new(grid, :b, [0, 7] )
-    grid[0][1] = Knight.new(grid, :b, [0, 1] )
-    grid[0][6] = Knight.new(grid, :b, [0, 6] )
-    grid[0][2] = Bishop.new(grid, :b, [0, 2] )
-    grid[0][5] = Bishop.new(grid, :b, [0, 5] )
-    grid[0][3] = Queen.new(grid, :b, [0, 3] )
-    grid[0][4] = King.new(grid, :b, [0, 4] )
+    # self.add_piece([0,0],Rook.new)
+    grid[0][0] = Rook.new(grid, :b) ## use add_piece
+    grid[0][7] = Rook.new(grid, :b )
+    grid[0][1] = Knight.new(grid, :b )
+    grid[0][6] = Knight.new(grid, :b )
+    grid[0][2] = Bishop.new(grid, :b )
+    grid[0][5] = Bishop.new(grid, :b )
+    grid[0][3] = Queen.new(grid, :b )
+    grid[0][4] = King.new(grid, :b )
 
-    grid[7][0] = Rook.new(grid, :w, [7, 0] )
-    grid[7][7] = Rook.new(grid, :w, [7, 7] )
-    grid[7][1] = Knight.new(grid, :w, [7, 1] )
-    grid[7][6] = Knight.new(grid, :w, [7, 6] )
-    grid[7][2] = Bishop.new(grid, :w, [7, 2] )
-    grid[7][5] = Bishop.new(grid, :w, [7, 5] )
-    grid[7][3] = Queen.new(grid, :w, [7, 3] )
-    grid[7][4] = King.new(grid, :w, [7, 4] )
+    grid[7][0] = Rook.new(grid, :w )
+    grid[7][7] = Rook.new(grid, :w )
+    grid[7][1] = Knight.new(grid, :w )
+    grid[7][6] = Knight.new(grid, :w )
+    grid[7][2] = Bishop.new(grid, :w )
+    grid[7][5] = Bishop.new(grid, :w )
+    grid[7][3] = Queen.new(grid, :w )
+    grid[7][4] = King.new(grid, :w )
 
   end
 

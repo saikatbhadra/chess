@@ -2,7 +2,7 @@ require_relative 'piece'
 
 class SteppingPiece < Piece
   # knight / king / pawn??
-  def initialize(board, color, position)
+  def initialize(board, color)
     super
     @offsets = []
   end
@@ -31,7 +31,7 @@ class SteppingPiece < Piece
 end
 
 class Knight < SteppingPiece
-  def initialize(board, color, position)
+  def initialize(board, color)
     super
     @offsets = [
                 [2, 1],
@@ -47,7 +47,7 @@ class Knight < SteppingPiece
 end
 
 class King < SteppingPiece
-  def initialize(board, color, position)
+  def initialize(board, color)
     super
     @offsets = [-1, 0, 1].repeated_permutation(2).to_a
     @offsets.delete([0, 0])

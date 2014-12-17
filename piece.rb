@@ -2,17 +2,16 @@ require 'set'
 
 class Piece
   attr_accessor :board, :color, :position, :offsets #we should remove this eventually
-  def initialize(board, color, position)
+  def initialize(board, color)
     # @name = name
     @board = board
     @color = color
-    @position = position
   end
 
   def inspect
     {
-      # :color => color,
-      # :position => position,
+      :color => color,
+      :position => position,
       :class => self.class
     }.inspect
   end
@@ -31,7 +30,7 @@ end
 
 class Pawn < Piece
   attr_reader :offset, :diagonal_offsets
-  def initialize(board, color, position)
+  def initialize(board, color)
     super
     @offset = 0
     color == :b ? @offset = [1, 0] : @offset = [-1, 0]
@@ -81,7 +80,3 @@ class Pawn < Piece
   end
 
 end
-
-# my_board = Board.new
-# my_pawn = Pawn.new(my_board, :b, [4, 4]
-# p my_pawn.offset
