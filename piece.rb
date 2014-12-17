@@ -18,7 +18,7 @@ class Piece
 
   def move_into_check?(destination)
     dup_board = board.dup
-    dup_board.move(position, destination)
+    dup_board.move_without_validation(position, destination) # we need to fix this
     dup_board.in_check?(color)
   end
 

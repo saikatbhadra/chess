@@ -26,23 +26,17 @@ if __FILE__ == $PROGRAM_NAME
 
   my_board = Board.new(true)
   my_king = King.new(my_board,:b)
-  my_board.add_piece([4,4],my_king)
-  white_knight = Knight.new(my_board, :w)
-  my_board.add_piece([4,5], white_knight)
-  white_rook = Rook.new(my_board, :w)
-  my_board.add_piece([4,7], white_rook)
+  my_board.add_piece([4,3],my_king)
+  # my_board.add_piece([5, 4], Bishop.new(my_board, :b))
+  my_board.add_piece([0, 2], Rook.new(my_board, :w))
+  my_board.add_piece([0, 3], Queen.new(my_board, :w))
+  my_board.add_piece([0, 4], Queen.new(my_board, :w))
 
-  second_board = my_board.dup
-  puts "My board: "
   p my_board
-  puts "2nd board: "
-  p second_board
+  p my_board.checkmate?(:b)
 
-  my_board.add_piece([1,1], Queen.new(my_board,:b))
-  puts "My board: "
-  p my_board
-  puts "2nd board: "
-  p second_board
+
+  # my_board.move([4, 3],[4,4])
   #
 
 end

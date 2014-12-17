@@ -21,6 +21,13 @@ class Board
     new_board
   end
 
+  def checkmate?(color)
+    if in_check?(color)
+      color_pieces = get_pieces(color)
+      color_pieces.all? { |piece| piece.valid_moves == [] }
+    end
+  end
+
   def inspect
     inspect_str = ''
     grid.each_with_index do |row,i|
@@ -112,7 +119,24 @@ class Board
 
     x ,y = start
     chess_piece = grid[x][y]
-    raise "Invalid Move" unless chess_piece.possible_moves.include?(destination)
+    raise "Moves into check" if chess_piece.move_into_check?(destination)
+    raise "Invalid Move" unless chess_piece.valid_moves.include?(destination)
+
+    # remove the piece from its current spot
+    remove_piece(start)
+
+    # remove opponent piece if it exists
+    remove_piece(destination) if occupied?(destination)
+
+    # add new piece
+    add_piece(destination, chess_piece)
+  end
+
+  def move_without_validation(start, destination)
+    raise "This tile is empty" unless occupied?(start)
+
+    x ,y = start
+    chess_piece = grid[x][y]
 
     # remove the piece from its current spot
     remove_piece(start)
@@ -126,16 +150,14 @@ class Board
 
   def in_check?(color)
     king_coord = get_coord(King, color)
-    puts "King Coord: #{king_coord}"
+
 
     # get all of the opponent's pieces
     opponent_color = (color == :w) ? :b : :w
     opponent_pieces = get_pieces(opponent_color)
-    puts "opponent_pieces: #{opponent_pieces}"
+
 
     opponent_pieces.any? { |piece|
-      p piece
-      p piece.possible_moves
       piece.possible_moves.include?(king_coord)
       }
   end
