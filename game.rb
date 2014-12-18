@@ -1,42 +1,65 @@
 require_relative 'board'
 
+class Game
+  attr_reader :players, :board
+
+  def initialize(player1, player2)
+    @board = Board.new
+    @players = [player1, player2]
+    player1.color = :b
+    player2.color = :w
+  end
+
+  def play
+    until over?
+      player = get_player
+      p board
+      start, destination = player.get_move
+      move(player, start, destination)
+    end
+  end
+
+  def move(player, start, destination)
+    raise "You can't move that!" unless board[*start].color == player.color
+    board.move(start, destination)
+  end
+
+  def get_player
+    players.reverse!
+    players.last
+  end
+
+  def over?
+    return true if board.checkmate?(:w)||board.checkmate?(:b)
+    false
+  end
+
+end
+
+class HumanPlayer
+  attr_accessor :color
+
+  def get_move
+    puts "Your color is #{color}"
+    puts "Enter start"
+    start = gets.chomp.split(",").map(&:to_i)
+    puts "Enter destination"
+    destination = gets.chomp.split(",").map(&:to_i)
+
+    [start, destination]
+  end
+end
+
+class ComputerPlayer
+  def initialize(color)
+    @color = color
+  end
+end
+
 if __FILE__ == $PROGRAM_NAME
-  # my_board = Board.new
-  # p my_board.grid
-  # puts my_board.inspect
-  # my_bishop = Bishop.new(my_board, "black", [3,4])
-  # my_rook = Rook.new(my_board, "black", [3,4])
-  # my_queen = Queen.new(my_board, "black", [3,4])
-  # my_knight = Knight.new(my_board, "black", [4,4])
-  # my_king = King.new(my_board, "black", [0,0])
-  # my_king.possible_moves
-
-
-  # my_board = Board.new
-  # my_pawn = Pawn.new(my_board, :b, [1, 4])
-  # my_board.grid[1][4] = my_pawn
-  #
-  # opp_queen = Queen.new(my_board, :w, [3, 4])
-  # my_board.grid[3][4] = opp_queen
-  #
-  # opp_rook = Rook.new(my_board, :w, [2, 5])
-  # my_board.grid[2][5] = opp_rook
-  #
-  # p my_pawn.possible_moves
-
-  my_board = Board.new(true)
-  my_king = King.new(my_board,:b)
-  my_board.add_piece([4,3],my_king)
-  # my_board.add_piece([5, 4], Bishop.new(my_board, :b))
-  my_board.add_piece([0, 2], Rook.new(my_board, :w))
-  my_board.add_piece([0, 3], Queen.new(my_board, :w))
-  my_board.add_piece([0, 4], Queen.new(my_board, :w))
-
-  p my_board
-  p my_board.checkmate?(:b)
-
-
-  # my_board.move([4, 3],[4,4])
-  #
+  h1 = HumanPlayer.new
+  h2 = HumanPlayer.new
+  game = Game.new(h1,h2)
+  game.play
 
 end

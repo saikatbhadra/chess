@@ -10,9 +10,10 @@ class Piece
 
   def inspect
     {
-      :color => color,
+      # :color => color,
       :position => position,
-      :class => self.class
+      # :class => self.class,
+      :unicode => self.unicode
     }.inspect
   end
 
@@ -39,6 +40,10 @@ class Pawn < Piece
     else
       @diagonal_offsets = [[-1, 1],[-1,-1]]
     end
+  end
+
+  def unicode
+    (color == :w) ? "\u2659" : "\u265F"
   end
 
   # REFACTORRR!

@@ -22,7 +22,7 @@ class SteppingPiece < Piece
     future_position[1] += offset[1]
     if board.on_board?(future_position) && !board.occupied?(future_position)
       moves << future_position
-    elsif board.occupied?(future_position) &&  color != board[future_position].color
+    elsif board.on_board?(future_position) && board.occupied?(future_position) &&  color != board[*future_position].color
       moves << future_position
     end
 
@@ -44,6 +44,10 @@ class Knight < SteppingPiece
                 [1, -2]
                 ]
   end
+
+  def unicode
+    (color == :w) ? "\u2658" : "\u265E"
+  end
 end
 
 class King < SteppingPiece
@@ -51,5 +55,9 @@ class King < SteppingPiece
     super
     @offsets = [-1, 0, 1].repeated_permutation(2).to_a
     @offsets.delete([0, 0])
+  end
+
+  def unicode
+    (color == :w) ? "\u2654" : "\u265A"
   end
 end

@@ -47,6 +47,10 @@ class Bishop < SlidingPiece
     @offsets = [-1, 1].repeated_permutation(2).to_a
   end
 
+  def unicode
+    (color == :w) ? "\u2657" : "\u265D"
+  end
+
 end
 
 class Rook < SlidingPiece
@@ -60,6 +64,9 @@ class Rook < SlidingPiece
     ]
   end
 
+  def unicode
+    (color == :w) ? "\u2656" : "\u265C"
+  end
 end
 
 class Queen < SlidingPiece
@@ -67,5 +74,8 @@ class Queen < SlidingPiece
     super
     @offsets = [-1, 0, 1].repeated_permutation(2).to_a
     @offsets.delete([0, 0])
+  end
+  def unicode
+    (color == :w) ? "\u2655" : "\u265B"
   end
 end

@@ -1,5 +1,9 @@
 require_relative 'pieces'
 
+class MovementError < StandardError
+
+end
+
 class Board
   attr_accessor :grid
   def initialize(blank_board= false)
@@ -31,11 +35,11 @@ class Board
   def inspect
     inspect_str = ''
     grid.each_with_index do |row,i|
-      inspect_str << " \t0\t1\t2\t3\t4\t5\t6\t7\t\n" if i == 0
+      inspect_str << " \t0\t1\t2\t3\t4\t5\t6\t7\t\n\n" if i == 0
       row.each_with_index do |el,j|
         inspect_str << "#{i}\t" if j == 0
         unless el.nil?
-          inspect_str << "#{el.class.to_s[0]}\t"
+          inspect_str << "#{el.unicode}\t"
         else
           inspect_str << "_\t"
         end
@@ -75,25 +79,29 @@ class Board
   end
 
   def set_board
-    # self.add_piece([0,0],Rook.new)
-    grid[0][0] = Rook.new(grid, :b) ## use add_piece
-    grid[0][7] = Rook.new(grid, :b )
-    grid[0][1] = Knight.new(grid, :b )
-    grid[0][6] = Knight.new(grid, :b )
-    grid[0][2] = Bishop.new(grid, :b )
-    grid[0][5] = Bishop.new(grid, :b )
-    grid[0][3] = Queen.new(grid, :b )
-    grid[0][4] = King.new(grid, :b )
+    add_piece([0,0], Rook.new(self, :b))
+    add_piece([0,7], Rook.new(self, :b ))
+    add_piece([0,1], Knight.new(self, :b ))
+    add_piece([0,6], Knight.new(self, :b ))
+    add_piece([0,2], Bishop.new(self, :b ))
+    add_piece([0,5], Bishop.new(self, :b ))
+    add_piece([0,3], Queen.new(self, :b ))
+    add_piece([0,4], King.new(self, :b ))
+    8.times do |column|
+      add_piece([1, column], Pawn.new(self, :b))
+    end
 
-    grid[7][0] = Rook.new(grid, :w )
-    grid[7][7] = Rook.new(grid, :w )
-    grid[7][1] = Knight.new(grid, :w )
-    grid[7][6] = Knight.new(grid, :w )
-    grid[7][2] = Bishop.new(grid, :w )
-    grid[7][5] = Bishop.new(grid, :w )
-    grid[7][3] = Queen.new(grid, :w )
-    grid[7][4] = King.new(grid, :w )
-
+    add_piece([7,0], Rook.new(self, :w ))
+    add_piece([7,7], Rook.new(self, :w ))
+    add_piece([7,1], Knight.new(self, :w ))
+    add_piece([7,6], Knight.new(self, :w ))
+    add_piece([7,2], Bishop.new(self, :w ))
+    add_piece([7,5], Bishop.new(self, :w ))
+    add_piece([7,3], Queen.new(self, :w ))
+    add_piece([7,4], King.new(self, :w ))
+    8.times do |column|
+      add_piece([6, column], Pawn.new(self, :w))
+    end
   end
 
   def free?(new_pos)
@@ -115,12 +123,12 @@ class Board
 
 
   def move(start, destination)
-    raise "This tile is empty" unless occupied?(start)
+    raise MovementError.new("This tile is empty") unless occupied?(start)
 
     x ,y = start
     chess_piece = grid[x][y]
-    raise "Moves into check" if chess_piece.move_into_check?(destination)
-    raise "Invalid Move" unless chess_piece.valid_moves.include?(destination)
+    raise MovementError.new("Moves into check") if chess_piece.move_into_check?(destination)
+    raise MovementError.new("Invalid move") unless chess_piece.valid_moves.include?(destination)
 
     # remove the piece from its current spot
     remove_piece(start)
