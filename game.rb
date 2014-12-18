@@ -15,12 +15,19 @@ class Game
       player = get_player
       p board
       start, destination = player.get_move
-      move(player, start, destination)
+      begin
+        move(player, start, destination)
+      rescue MovementError => e
+        puts "ERROR: #{e.message}"
+        puts "Try again!"
+        player = get_player
+        next
+      end
     end
   end
 
   def move(player, start, destination)
-    raise "You can't move that!" unless board[*start].color == player.color
+    raise MovementError.new("This isn't your piece!") if board.occupied?(start) && board[*start].color != player.color
     board.move(start, destination)
   end
 
@@ -41,13 +48,30 @@ class HumanPlayer
 
   def get_move
     puts "Your color is #{color}"
-    puts "Enter start"
-    start = gets.chomp.split(",").map(&:to_i)
-    puts "Enter destination"
-    destination = gets.chomp.split(",").map(&:to_i)
+
+    start = get_input("Enter start -> ")
+    destination = get_input("Enter end -> ")
 
     [start, destination]
   end
+
+  def get_input(prompt)
+    while true
+      print prompt
+      input = gets.chomp
+      break if valid_input?(input)
+    end
+    convert_input(input)
+  end
+
+  def convert_input(string)
+    string.split(",").map(&:to_i)
+  end
+
+  def valid_input?(input_string)
+    input_string.match(/\d\s*,\s*\d/)
+  end
+
 end
 
 class ComputerPlayer
